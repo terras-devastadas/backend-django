@@ -10,10 +10,7 @@ import os
 load_dotenv()
 SECRET_KEY = os.environ["SECRET_KEY"]
 
-def str_to_bool(value):
-    return value.lower() in ('true', '1', 't', 'yes')
-
-DEBUG = str_to_bool(os.environ.get("DEBUG", "False"))
+DEBUG = os.environ["DEBUG"]
 
 ALLOWED_HOSTS = ['*']
 
@@ -29,6 +26,8 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+
+    'exampleItem',
 ]
 
 REST_FRAMEWORK = {
@@ -53,6 +52,8 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'server.urls'
 
+APPEND_SLASH = False
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -75,24 +76,12 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'database',
-        'USER': 'user',
-        'PASSWORD': 'password',
-        'HOST': 'PostgresDB',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
