@@ -7,16 +7,7 @@ Django Version: 5.1.3
 Django Rest Framework: 3.15.2
 
 
-## Execução Com Docker
-
-1. Ter Docker e Docker Compose instalados
-
-1. Na raiz do projeto, executar o comando:
-
-   `docker compose up --build`
-
-
-## Execução Manual
+## Execução
 
 1. Na raiz do projeto, criar um virtual environment usando venv:
 
