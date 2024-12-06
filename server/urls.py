@@ -1,9 +1,21 @@
-from django.urls import path
-from . import views
+from django.urls import include, path
+from django.contrib import admin
+from rest_framework import routers
+from django.conf.urls.static import static
+from rest_framework.authtoken.views import obtain_auth_token
+
+from customUser.views import CustomUserViewset, LogoutView
+from exampleItem.views import ItemViewset
+from community.views import CommunityViewset
+
+router = routers.DefaultRouter()
+router.register(r"items", ItemViewset)
+router.register(r"users", CustomUserViewset)
+router.register(r"communities", CommunityViewset)
 
 urlpatterns = [
-    path('', views.listar_comunidades, name='listar_comunidades'),
-    path('criar/', views.criar_comunidade, name='criar_comunidade'),
-    path('atualizar/<int:pk>/', views.atualizar_comunidade, name='atualizar_comunidade'),
-    path('deletar/<int:pk>/', views.deletar_comunidade, name='deletar_comunidade'),
+    path("", include(router.urls)),
+    path('login/', obtain_auth_token, name='api_token_auth'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('admin/', admin.site.urls),
 ]
