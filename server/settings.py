@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     'exampleItem',
     'customUser',
+    'community',
 ]
 
 REST_FRAMEWORK = {
@@ -41,7 +42,7 @@ REST_FRAMEWORK = {
 }
 
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 
 MIDDLEWARE = [
