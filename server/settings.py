@@ -12,9 +12,11 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 DEBUG = os.environ["DEBUG"]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'http://localhost:5173']
 
 # Application definition
+
+AUTH_USER_MODEL = 'customUser.CustomUser'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,14 +28,21 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
 
     'exampleItem',
+    'customUser',
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
 }
+
+
+APPEND_SLASH = False
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,7 +61,6 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'server.urls'
 
-APPEND_SLASH = False
 
 TEMPLATES = [
     {
