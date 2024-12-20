@@ -5,4 +5,4 @@ class CommunitySerializer(serializers.ModelSerializer):
     subcommunities = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Community
-        fields = ['id', 'name', 'description', 'banner', 'visibility_students', 'visibility_teachers', 'created_at', 'parent', 'subcommunities']
+        fields = ['id', 'name', 'description', 'banner', 'visibility', 'created_at', 'parent', 'subcommunities', 'is_subcommunity'] 
