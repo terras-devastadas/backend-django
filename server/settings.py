@@ -12,7 +12,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 DEBUG = os.environ["DEBUG"]
 
-ALLOWED_HOSTS = ['*', 'http://localhost:5173']
+ALLOWED_HOSTS = ['*', 'http://localhost:5173/']
 
 # Application definition
 
