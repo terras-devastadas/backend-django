@@ -1,22 +1,10 @@
 from rest_framework import serializers
-from .models import Post, PostImage
-
-class PostImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PostImage
-        fields = ['id', 'image']
+from .models import Post
 
 class PostSerializer(serializers.ModelSerializer):
-    images = PostImageSerializer(many=True, read_only=True)
-    image_files = serializers.ListField(
-        child=serializers.ImageField(write_only=True),
-        write_only=True,
-        required=False  # Torna o campo opcional
-    )
-
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'author_username', 'created_at', 'updated_at', 'images', 'image_files']
+        fields = ['id', 'title', 'content', 'author_username', 'created_at', 'updated_at', 'image']
         extra_kwargs = {
             'author_username': {'read_only': True},
         }
