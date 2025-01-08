@@ -32,6 +32,9 @@ INSTALLED_APPS = [
 
     'customUser',
     'community',
+
+    #App de posts
+    'posts',
 ]
 
 REST_FRAMEWORK = {
@@ -40,6 +43,9 @@ REST_FRAMEWORK = {
     ),
 }
 
+#Envvio de img dos posts
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 APPEND_SLASH = True
 
