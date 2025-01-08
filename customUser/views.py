@@ -20,3 +20,4 @@ class LogoutView(APIView):
     def post(self, request):
         request.auth.delete()
         return Response({"message": "Logout realizado com sucesso."})
+    

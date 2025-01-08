@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
 
 from customUser.views import CustomUserViewset, LogoutView
+from customUser.views import CustomUserViewset, LogoutView
 from community.views import CommunityViewset
 from posts.views import PostViewSet
 
