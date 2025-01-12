@@ -2,9 +2,9 @@ from rest_framework import viewsets
 from .models import Community
 from .serializers import CommunitySerializer
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
 class CommunityViewset(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
