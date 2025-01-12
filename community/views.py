@@ -2,13 +2,12 @@ from rest_framework import viewsets
 from .models import Community
 from .serializers import CommunitySerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class CommunityViewset(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
-<<<<<<< Updated upstream
-    # permission_classes = [IsAuthenticated]
-=======
     # permission_classes = [IsAuthenticated]
 
     #Filtragem de comunidades por tipo de usuário
@@ -32,4 +31,3 @@ class CommunityViewset(viewsets.ModelViewSet):
         serializer = CommunitySerializer(subcommunities, many=True)
         return Response(serializer.data)
     
->>>>>>> Stashed changes
