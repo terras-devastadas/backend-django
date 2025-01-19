@@ -1,19 +1,24 @@
 from rest_framework import serializers
 from .models import Post
+import base64
+from django.core.files.base import ContentFile     
+import uuid
+import six
+
+class Base64ImageField(serializers.ImageField):
+    def to_internal_value(self, data):
+        if isinstance(data, six.string_types) and data.startswith('data:image'):
+            format, imgstr = data.split(';base64,')
+            ext = format.split('/')[-1]
+            unique_name = str(uuid.uuid4())[:12]
+            data = ContentFile(base64.b64decode(imgstr), name=f"{unique_name}.{ext}")
+        return super().to_internal_value(data)
 
 class PostSerializer(serializers.ModelSerializer):
+    image = Base64ImageField(required=False, allow_null=True)
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'author_username', 'created_at', 'updated_at', 'image']
+        fields = ['id', 'title', 'content', 'author_username', 'created_at', 'updated_at', 'image', 'community']
         extra_kwargs = {
             'author_username': {'read_only': True},
         }
-
-    def create(self, validated_data):
-        image_files = validated_data.pop('image_files', None)  # Pega o campo, se existir
-        user = self.context['request'].user
-        post = Post.objects.create(author_username=user.username, **validated_data)
-        if image_files:
-            for image_file in image_files:
-                PostImage.objects.create(post=post, image=image_file)
-        return post

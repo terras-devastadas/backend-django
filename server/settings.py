@@ -7,6 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 from dotenv import load_dotenv
 import os
 
+import environ
+
+
+
+
 load_dotenv()
 SECRET_KEY = os.environ["SECRET_KEY"]
 
@@ -137,3 +142,40 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+env = environ.Env(
+    # Defina padrões, se necessário
+    DEBUG=(bool, False)
+)
+
+# Caminho para o diretório base
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Leia o arquivo .env, se existir
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# Configurações de E-mail
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env.int('EMAIL_PORT')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'customUser.views': {  # Substitua pelo nome adequado do seu módulo
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}

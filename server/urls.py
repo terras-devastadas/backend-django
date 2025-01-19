@@ -8,21 +8,24 @@ from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
 
 from customUser.views import CustomUserViewset, LogoutView
-from customUser.views import CustomUserViewset, LogoutView
 from community.views import CommunityViewset
 from posts.views import PostViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r"users", CustomUserViewset)
+router.register(r"users", CustomUserViewset, basename="user")
 router.register(r"communities", CommunityViewset)
 router.register(r"posts", PostViewSet)
+
+
+
 
 urlpatterns = [
     path("", include(router.urls)),
     path('login/', obtain_auth_token, name='api_token_auth'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
+  
 ]
 
 if settings.DEBUG:

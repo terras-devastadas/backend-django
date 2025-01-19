@@ -3,7 +3,7 @@ from django.db import models
 class Community(models.Model):
     communityName = models.CharField(max_length=100)
     communityDescription = models.TextField()
-    # banner = models.ImageField(upload_to='images/banners/', null=True, blank=True)
+    banner = models.ImageField(upload_to='images/banners/', null=True, blank=True)
     visibility = models.CharField(max_length = 100, default='')
     passwordRequired = models.BooleanField(default=False)
     password = models.CharField(max_length=100, null=True, blank=True)
