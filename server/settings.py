@@ -9,10 +9,11 @@ import os
 
 import environ
 
-
-
-
 load_dotenv()
+FRONTEND_URL = os.environ["FRONTEND_URL"]
+BACKEND_URL = os.environ["BACKEND_URL"]
+
+
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 DEBUG = os.environ["DEBUG"]

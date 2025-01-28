@@ -7,7 +7,7 @@ class Post(models.Model):
     author_username = models.CharField(max_length=50, default='')  # Armazena o username diretamente
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='images/posts/', blank=True, default='')
+    image = models.ImageField(upload_to='images/posts/', blank=True, default='', null=True)
    
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='posts', default='', blank=True, null=True) 
 

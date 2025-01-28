@@ -7,12 +7,13 @@ import six
 
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
-        if isinstance(data, six.string_types) and data.startswith('data:image'):
-            format, imgstr = data.split(';base64,')
-            ext = format.split('/')[-1]
-            unique_name = str(uuid.uuid4())[:12]
-            data = ContentFile(base64.b64decode(imgstr), name=f"{unique_name}.{ext}")
-        return super().to_internal_value(data)
+        if data is None:
+            if isinstance(data, six.string_types) and data.startswith('data:image'):
+                format, imgstr = data.split(';base64,')
+                ext = format.split('/')[-1]
+                unique_name = str(uuid.uuid4())[:12]
+                data = ContentFile(base64.b64decode(imgstr), name=f"{unique_name}.{ext}")
+            return super().to_internal_value(data)
 
 class PostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(required=False, allow_null=True)
