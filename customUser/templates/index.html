@@ -1,20 +1,11 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Registro de Usuário</title>
+    <title>Activate your account</title>
 </head>
 <body>
-    <form method="POST" action="/users/">
-        {% csrf_token %}
-        <input type="text" name="name" required placeholder="Nome">
-        <input type="email" name="email" required placeholder="Email">
-        <textarea name="message" placeholder="Sua mensagem">
-        </textarea> <!-- Campo de mensagem -->
-        <input type="password" name="password" required placeholder="Senha">
-        <button type="submit">Cadastrar</button>
-    </form>
+    <p>Hi {{ user.username }},</p>
+    <p>Thank you for registering. Please click the link below to activate your account:</p>
+    <p><a href="{{ activation_link }}">Activate your account</a></p>
 </body>
 </html>
