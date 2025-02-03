@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework import status
 import logging
-from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.authtoken.views import obtain_auth_token, Token
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class CustomUserViewset(viewsets.ModelViewSet):
         user = serializer.instance  # Recupera o objeto criado diretamente do serializer
         name = user.username
         email = user.email
-        token = obtain_auth_token(user)
+        token, created = Token.objects.get_or_create(user=user)
         try:
             send_mail(
                 'Confirmação de Cadastro',
@@ -60,17 +60,14 @@ class InfoUserView(APIView):
 
     def get(self, request):
         user = request.user
-        return Response({
-            'username': user.username,
-            'email': user.email,
-            'firstName': user.firstName,
-            'lastName': user.lastName,
-            #is_staff acesso a administração pode ser usado para indicar se é professor
-            'is_staff': user.is_staff,
-            # 'is_superuser': user.is_superuser,
-            'is_active': user.is_active,
-            'date_joined': user.date_joined,
-            'last_login': user.last_login,
-        })
-         
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        user = request.user
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

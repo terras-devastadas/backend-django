@@ -30,4 +30,12 @@ class CommunityViewset(viewsets.ModelViewSet):
         subcommunities = community.subcommunities.filter(is_subcommunity=True)
         serializer = CommunitySerializer(subcommunities, many=True)
         return Response(serializer.data)
-    
+
+class CommunityViewSearch(viewsets.ModelViewSet):
+    queryset = Community.objects.all()
+    serializer_class = CommunitySerializer
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        search = self.request.query_params.get('query', None)
+        return Community.objects.filter(communityName__icontains=search)

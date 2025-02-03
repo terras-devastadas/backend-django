@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
 
 from customUser.views import CustomUserViewset, LogoutView, InfoUserView
-from community.views import CommunityViewset
+from community.views import CommunityViewset, CommunityViewSearch
 from posts.views import PostViewSet
 
 
@@ -25,7 +25,8 @@ urlpatterns = [
     path('login/', obtain_auth_token, name='api_token_auth'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
-    path("info/", InfoUserView.as_view(), name="info"),
+    path('info/', InfoUserView.as_view(), name="info"),
+    path('search/', CommunityViewSearch.as_view({'get':'list'}), name="search")
   
 ]
 
