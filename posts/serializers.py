@@ -4,7 +4,7 @@ import base64
 from django.core.files.base import ContentFile     
 import uuid
 import six
-from customUser.models import CustomUser
+from customUser.serializers import CustomUserSerializer
 
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
@@ -17,6 +17,7 @@ class Base64ImageField(serializers.ImageField):
             return super().to_internal_value(data)
 class PostSerializer(serializers.ModelSerializer):
     image = Base64ImageField(required=False, allow_null=True)
+    user = CustomUserSerializer(read_only=True)
    
     class Meta:
         model = Post
