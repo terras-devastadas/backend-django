@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import CustomUser
 import six, uuid, base64
 from django.core.files.base import ContentFile   
-    
+from community.models import Community
+
 class Base64ImageField(serializers.ImageField):
         def to_internal_value(self, data):
             if data:            
@@ -14,7 +15,12 @@ class Base64ImageField(serializers.ImageField):
                 return super().to_internal_value(data)
 class CustomUserSerializer(serializers.ModelSerializer):
     photo_profile = Base64ImageField(required=False, allow_null=True)
-  
+    community_ids = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Community.objects.all(),
+        required=False
+    )
+
     class Meta:
         model = CustomUser
         fields = '__all__'
@@ -37,6 +43,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
 
     def create(self, validated_data):
+        community_ids = validated_data.pop('community_ids', None)
         password = validated_data.pop('password', None)        
         email = validated_data.get('email', '')
         matricula = email.split('@')[0]
