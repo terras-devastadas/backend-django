@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class CustomUser(AbstractUser):
 
     bio = models.TextField(blank=True, default='')
@@ -10,3 +11,5 @@ class CustomUser(AbstractUser):
     semester = models.CharField(max_length=100, blank=True, default='')
     subject = models.CharField(max_length=100, blank=True, default='')
     food = models.CharField(max_length=100, blank=True, default='')
+    community_ids = models.ManyToManyField('community.Community', related_name='members', blank=True)
+    is_active = models.BooleanField(default=False)

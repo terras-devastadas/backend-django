@@ -9,6 +9,7 @@ class CommunityViewset(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
     # permission_classes = [IsAuthenticated]
+    
 
     #Filtragem de comunidades por tipo de usuário
     def get_queryset(self):
@@ -22,6 +23,8 @@ class CommunityViewset(viewsets.ModelViewSet):
         
         else:
             return Community.objects.all()
+        
+   
 
     #Acesso só através da comunidade pai
     @action(detail=True, methods=['get'])

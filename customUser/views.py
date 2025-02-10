@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 class CustomUserViewset(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    lookup_field = 'email'
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
