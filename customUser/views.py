@@ -14,6 +14,8 @@ from django.template.loader import render_to_string
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from community.serializers import CommunitySerializer
+from rest_framework.decorators import action
 
 
 logger = logging.getLogger(__name__)
@@ -21,6 +23,14 @@ logger = logging.getLogger(__name__)
 class CustomUserViewset(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+
+    @action(detail=False, methods=['get'], url_path='my-communities')
+    def my_communities(self, request):
+        user=request.user
+        communities = user.community_ids.all()
+        serializer = CommunitySerializer(communities, many=True)
+        return Response(serializer.data)
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -91,5 +101,6 @@ class InfoUserView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
