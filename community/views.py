@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 class CommunityViewset(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
 
     #Filtragem de comunidades por tipo de usuário
@@ -37,7 +37,7 @@ class CommunityViewset(viewsets.ModelViewSet):
 class CommunityViewSearch(viewsets.ModelViewSet):
     queryset = Community.objects.all()
     serializer_class = CommunitySerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         search = self.request.query_params.get('query', None)

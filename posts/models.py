@@ -11,7 +11,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='images/posts/', blank=True, default='')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posts')
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='posts', default='', blank=True, null=True) 
+    community = models.CharField(max_length=100, default='')
 
     
     def __str__(self):
